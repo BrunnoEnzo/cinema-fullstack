@@ -1,5 +1,7 @@
 # 🎬 Cinema Fullstack
 
+Projeto final de Tecnologia de Construção de Software.
+
 Projeto fullstack de exemplo utilizando **React + Vite (Frontend)**, **NestJS (Backend)**, **PostgreSQL**, com infraestrutura orquestrada em **Docker** e **Nginx** como proxy reverso.
 
 ---
