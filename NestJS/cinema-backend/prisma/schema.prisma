@@ -1,0 +1,88 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Modelo de Filme
+model Filme {
+  id              Int       @id @default(autoincrement())
+  titulo          String    @unique
+  descricao       String
+  genero          String
+  classificacao   Int
+  duracao         Int
+  dataEstreia     DateTime  @map("data_estreia") @db.Date
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  sessoes         Sessao[]
+
+  @@map("filmes")
+}
+
+// Modelo de Sala
+model Sala {
+  id        Int      @id @default(autoincrement())
+  nomeSala  String   @unique @map("nome_sala")
+  capacidade Int
+  tipo      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  sessoes   Sessao[]
+
+  @@map("salas")
+}
+
+// Novo modelo para Sessao
+model Sessao {
+  id          Int      @id @default(autoincrement())
+  dataHora    DateTime @map("data_hora")
+  preco       Decimal  @db.Decimal(10, 2)
+  idioma      String
+  formato     String
+
+  filmeId     Int      @map("filme_id")
+  salaId      Int      @map("sala_id")
+
+  // Relações com os modelos Filme e Sala
+  // MUDANÇA AQUI: Se um Filme for deletado, suas Sessões são deletadas.
+  filme       Filme    @relation(fields: [filmeId], references: [id], onDelete: Cascade)
+  // MUDANÇA AQUI: Se uma Sala for deletada, suas Sessões são deletadas.
+  sala        Sala     @relation(fields: [salaId], references: [id], onDelete: Cascade)
+
+  vendas      Venda[]
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("sessoes")
+}
+
+// Novo modelo para Venda
+model Venda {
+  id            Int      @id @default(autoincrement())
+  nomeCliente   String   @map("nome_cliente")
+  cpf           String   @map("cpf")
+  assento       String
+  tipoPagamento String   @map("tipo_pagamento")
+
+  sessaoId      Int      @map("sessao_id")
+
+  // Relação com o modelo Sessao
+  // MUDANÇA AQUI: Se uma Sessão for deletada, suas Vendas são deletadas.
+  sessao        Sessao   @relation(fields: [sessaoId], references: [id], onDelete: Cascade)
+
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@map("vendas")
+}

@@ -1,0 +1,13 @@
+# Ignorar dependências locais, pois elas serão instaladas dentro do container
+node_modules
+
+# Ignorar a pasta de build local
+dist
+build
+
+# Ignorar arquivos de ambiente locais
+.env
+.env.*
+
+# Ignorar logs de erro do npm
+npm-debug.log

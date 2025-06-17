@@ -1,0 +1,46 @@
+services:
+  nginx:
+    container_name: cinema_nginx
+    build:
+      # O contexto é a raiz do projeto, para que o Dockerfile possa acessar a pasta Cinema-React
+      context: .
+      dockerfile: ./nginx/Dockerfile
+      args:
+        # Injeta a variável de ambiente no processo de build do Nginx/React
+        - VITE_API_BASE_URL=/api
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - cinema-net
+
+  backend:
+    build:
+      context: ./NestJS/cinema-backend
+    container_name: cinema_backend
+    env_file: .env
+    ports:
+      - "${BACKEND_PORT}:3000"
+    depends_on:
+      - db
+    networks:
+      - cinema-net
+
+  db:
+    image: postgres:15-alpine
+    container_name: cinema_db
+    env_file: .env
+    ports:
+      - "${POSTGRES_HOST_PORT}:5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - cinema-net
+
+volumes:
+  postgres_data:
+
+networks:
+  cinema-net:
+    driver: bridge

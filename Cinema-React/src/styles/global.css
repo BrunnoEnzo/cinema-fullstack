@@ -1,0 +1,60 @@
+/* Estilo para o título principal */
+h1.custom-text-center {
+    text-align: center;
+    font-size: 2.5rem;
+    font-weight: bold;
+    text-shadow: 2px 2px 5px rgba(0, 0.2, 0.5, 1);
+    margin-bottom: 20px;
+  }
+  
+  /* Barra de pesquisa */
+  #inputPesquisaTitulo {
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease, border-color 0.3s ease;
+  }
+  
+  #inputPesquisaTitulo:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
+    outline: none;
+  }
+  
+  #inputPesquisaTitulo:hover {
+    transform: scale(1.01);
+  }
+  
+  /* Botões */
+  button.custom-btn {
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+  
+  button.custom-btn:hover {
+    transform: scale(1.05);
+  }
+  
+  button.customMenor-btn {
+    border-radius: 5px;
+    padding: 6px 10px;
+    font-size: 1rem;
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+  
+  button.customMenor-btn:hover {
+    transform: scale(1.05);
+  }
+  
+  /* Tabela */
+  .custom-table-dark th {
+    background-color: #343a40;
+    color: #fff;
+    border-color: #545b61;
+  }
+  
